@@ -607,6 +607,44 @@ select.filter-select {
   color: #323130;
 }
 
+.modal-form-container .modal-form {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 10px 8px;
+  align-items: center;
+}
+
+.modal-form-container .modal-form label {
+  font-size: 12px;
+  color: #666;
+  line-height: 1.2;
+  display: block;
+  align-self: center;
+}
+
+.modal-form-container .modal-form input,
+.modal-form-container .modal-form select,
+.modal-form-container .modal-form textarea {
+  padding: 8px 10px;
+  border: 1px solid #d2d0ce;
+  border-radius: 4px;
+  font-size: 14px;
+  width: 100%;
+}
+
+.modal-form-container .modal-form select {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  padding-right: 32px;
+  background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' width='14' height='14' viewBox='0 0 24 24' fill='none'%3e%3cpath d='M7 10l5 5 5-5' stroke='%23374151' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/%3e%3c/svg%3e");
+  background-repeat: no-repeat;
+  background-position: right 10px center;
+  background-size: 14px 14px;
+  cursor: pointer;
+}
+
+/* Keep legacy modal-form for backward compatibility */
 .modal-form {
   display: grid;
   grid-template-columns: 1fr 1fr;

@@ -834,7 +834,8 @@ const Coordination: React.FC = () => {
           <div className="modal-content">
             <h3 className="modal-title">{editing ? 'Edit Installation' : 'Add Installation'}</h3>
 
-            <div className="modal-form">
+            <div className="modal-form-container">
+              <div className="modal-form">
               <label>Address</label>
               <input value={formState.address || ''} onChange={(e) => handleFormChange('address', e.target.value)} />
 
@@ -858,31 +859,40 @@ const Coordination: React.FC = () => {
               <input type="date" value={formState.dateInstall ? formState.dateInstall.split('T')[0] : ''} onChange={(e) => handleFormChange('dateInstall', e.target.value)} />
 
               <label>Time Slot</label>
-              <Autocomplete
-                suggestions={timeSlots}
-                value={formState.timeSlot || ''}
-                onChange={(v) => handleFormChange('timeSlot', v)}
-              />
+              <select value={formState.timeSlot || ''} onChange={(e) => handleFormChange('timeSlot', e.target.value)}>
+                <option value="">Select time slot</option>
+                {timeSlots.map(slot => (
+                  <option key={slot} value={slot}>{slot}</option>
+                ))}
+              </select>
 
               <label>Install Status</label>
-              <input value={formState.installStatus || ''} onChange={(e) => handleFormChange('installStatus', e.target.value)} />
+              <select value={formState.installStatus || ''} onChange={(e) => handleFormChange('installStatus', e.target.value)}>
+                <option value="">Select status</option>
+                {statuses.map(status => (
+                  <option key={status} value={status}>{status}</option>
+                ))}
+              </select>
 
               <label>Install Type</label>
-              <Autocomplete
-                suggestions={installTypes}
-                value={formState.installType || ''}
-                onChange={(v) => handleFormChange('installType', v)}
-              />
+              <select value={formState.installType || ''} onChange={(e) => handleFormChange('installType', e.target.value)}>
+                <option value="">Select type</option>
+                {installTypes.map(type => (
+                  <option key={type} value={type}>{type}</option>
+                ))}
+              </select>
 
               <label>ISP</label>
-              <Autocomplete
-                suggestions={isps}
-                value={formState.isp || ''}
-                onChange={(v) => handleFormChange('isp', v)}
-              />
+              <select value={formState.isp || ''} onChange={(e) => handleFormChange('isp', e.target.value)}>
+                <option value="">Select ISP</option>
+                {isps.map(isp => (
+                  <option key={isp} value={isp}>{isp}</option>
+                ))}
+              </select>
 
               <label>Last Note</label>
               <textarea value={formState.lastNote || ''} onChange={(e) => handleFormChange('lastNote', e.target.value)} />
+              </div>
             </div>
 
             <div className="modal-actions">
