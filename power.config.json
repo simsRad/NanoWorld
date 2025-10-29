@@ -1,0 +1,31 @@
+{
+  "appId": "d732aad0-0e1b-4a13-87e6-2ba94ecf78ba",
+  "appDisplayName": "NanoWorld",
+  "description": null,
+  "environmentId": "4c1ca5bf-40c8-ef70-920e-ff3cdc04f0a1",
+  "buildPath": "./dist",
+  "buildEntryPoint": "index.html",
+  "logoPath": "Default",
+  "localAppUrl": "http://localhost:3000/",
+  "connectionReferences": {
+    "shared_commondataserviceforapps": {
+      "connectionReferenceLogicalName": "dataverse_connection",
+      "source": "Dataverse",
+      "id": "b861225d5bd845dd8b07c966cf4f1c47",
+      "connectionId": "b861225d5bd845dd8b07c966cf4f1c47"
+    },
+    "shared_office365users": {
+      "connectionReferenceLogicalName": "office365users_connection",
+      "source": "Office365Users",
+      "id": "b861225d5bd845dd8b07c966cf4f1c47",
+      "connectionId": "b861225d5bd845dd8b07c966cf4f1c47"
+    }
+  },
+  "databaseReferences": {
+    "default.cds": {
+      "databaseType": "Dataverse",
+      "connectionReferenceLogicalName": "dataverse_connection",
+      "tables": ["systemuser", "cr8ac_codeappstable"]
+    }
+  }
+}

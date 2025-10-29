@@ -1,0 +1,1006 @@
+/* Light theme (default) */
+:root {
+  --bg: #f8fafc;
+  --card-bg: #ffffff;
+  --text: #0f172a;
+  --muted: #6b7280;
+  --accent: #6b21a8;
+  --accent-600: #7c2bd6;
+  --card-shadow: 0 6px 18px rgba(16,24,40,0.06);
+  --border: #e6e9ee;
+  /* light: subtle dark tint so page underneath is muted */
+  --modal-backdrop: rgba(2,6,23,0.12);
+}
+
+/* Dark theme overrides (applies when data-theme="dark" or .theme-dark is set on <html>) */
+:root[data-theme="dark"],
+html.theme-dark {
+  --bg: #0b1220;
+  --card-bg: #0f1724;
+  --text: #e6eef8;
+  --muted: #9aa6bf;
+  --accent: #9b7bff;
+  --accent-600: #a78bfa;
+  --card-shadow: 0 8px 24px rgba(2,6,23,0.6);
+  --border: rgba(255,255,255,0.06);
+  /* dark: stronger tint on dark theme */
+  --modal-backdrop: rgba(2,6,23,0.6);
+}
+
+/* ensure app-wide background + text follow the theme */
+html, body, #root {
+  background: var(--bg);
+  color: var(--text);
+  transition: background .18s ease, color .18s ease;
+}
+
+/* make main app containers inherit the theme colours */
+.app-shell,
+.main,
+.content,
+.card {
+  color: var(--text);
+  background: var(--card-bg);
+  transition: background .18s ease, color .18s ease, border-color .18s ease;
+}
+
+/* Sidebar (sidenav) should respond to theme */
+.sidebar {
+  background: var(--card-bg);
+  color: var(--text);
+  border-right: 1px solid var(--border);
+  transition: background .18s ease, color .18s ease, border-color .18s ease;
+}
+
+/* sidebar items / links */
+.sidebar .nav-item,
+.sidebar a {
+  color: var(--text);
+  background: transparent;
+  transition: background .12s ease, color .12s ease;
+}
+
+/* active / hover state uses specific purple color for sidebar only */
+.sidebar .nav-item.active {
+  background: #c596e3;
+  color: #fff;
+}
+
+.sidebar .nav-item:hover {
+  background: var(--accent);
+  color: #fff;
+}
+
+/* ensure icon boxes and tile labels invert appropriately */
+.landing-tile-left,
+.user-btn,
+.header,
+.btn-primary,
+.btn-muted {
+  color: var(--text);
+}
+
+/* primary buttons keep accent but text follows contrast */
+.btn-primary {
+  background: var(--accent);
+  color: #fff;
+}
+
+/* small helper for separators */
+.hr-theme {
+  background: var(--border);
+  height: 1px;
+}
+
+/* make sure app uses our vars */
+html, body, #root { background: var(--bg); color: var(--text); }
+
+/* example card usage */
+.card {
+  background: var(--card-bg);
+  color: var(--text);
+  box-shadow: var(--card-shadow);
+  border: 1px solid var(--border);
+}
+
+/* adjust header / buttons to use variables */
+.header { background: transparent; color: var(--text); }
+.btn-primary { background: var(--accent); color: #fff; border-radius: 8px; }
+.btn-muted { background: transparent; border: 1px solid var(--border); color: var(--muted); }
+
+*{box-sizing:border-box}
+html,body,#root{height:100%;margin:0;background:var(--bg)}
+.app-shell{display:flex;flex-direction:column;height:100vh}
+.header{
+  height:64px;background:var(--panel);display:flex;align-items:center;justify-content:space-between;padding:0 20px;border-bottom:1px solid #eee;
+}
+.header .logo{display:flex;align-items:center;gap:12px}
+.site-logo{width:42px;height:42px;border-radius:8px;background:linear-gradient(135deg,var(--accent),#a78bfa);display:flex;align-items:center;justify-content:center;color:#fff;font-weight:700}
+.top-nav{display:flex;gap:16px;color:var(--muted);font-weight:600}
+.top-nav a{color:var(--muted);text-decoration:none;padding:8px;border-radius:8px}
+.top-nav a.active{background:#f3e8ff;color:var(--accent-600)}
+
+/* ensure header logo fits inside the 64px header */
+.site-logo-wrap { display:flex; align-items:center; height:44px; }
+.site-logo-img {
+  max-height:44px;   /* fits within 64px header comfortably */
+  width:auto;
+  display:block;
+}
+
+/* slightly reduce header inner spacing to keep things aligned */
+.header .header-inner { width:100%; display:flex; align-items:center; justify-content:space-between; gap:12px; }
+
+/* keep top-nav links consistent with styles */
+.top-nav { display:flex; gap:12px; align-items:center; }
+.top-link { color:var(--muted); text-decoration:none; padding:8px; border-radius:8px; font-weight:600; }
+.top-link:hover { background:#f3e8ff; color:var(--accent-600); }
+
+.app-body{display:flex;flex:1;min-height:0}
+.sidebar{
+  background:#fbfdff;
+  border-right:1px solid #eee;
+  padding:12px;
+  display:flex;
+  flex-direction:column;
+  gap:12px;
+  transition:width 200ms ease, padding 200ms ease;
+  overflow:visible;
+  align-items:flex-start;
+}
+
+/* expanded */
+.sidebar--expanded{
+  width:220px;
+  padding:16px;
+  align-items:flex-start;
+}
+
+/* collapsed (icons only) */
+.sidebar--collapsed{
+  width:72px;
+  padding:12px 8px;
+  align-items:center;
+}
+
+/* top area containing toggle */
+.sidebar-top{
+  width:100%;
+  display:flex;
+  justify-content:flex-end;
+  padding-bottom:6px;
+}
+
+/* toggle button / waffle */
+.sidebar-toggle{
+  background:transparent;
+  border:none;
+  cursor:pointer;
+  color:var(--muted);
+  width:36px;
+  height:36px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  border-radius:8px;
+}
+.sidebar-toggle:hover{ background:#f3f4f6; }
+
+/* nav */
+.sidebar-nav{
+  display:flex;
+  flex-direction:column;
+  width:100%;
+  gap:6px;
+}
+
+/* each nav item: icon left, label right */
+.nav-item{
+  display:flex;
+  align-items:center;
+  gap:12px;
+  text-decoration:none;
+  color:var(--muted);
+  width:100%;
+  padding:8px;
+  border-radius:8px;
+  transition:background 150ms, color 150ms;
+}
+
+/* when collapsed, center icons and hide text */
+.sidebar--collapsed .nav-item{
+  justify-content:center;
+  gap:0;
+}
+.sidebar--collapsed .nav-label{
+  display:none;
+}
+
+/* active item */
+.nav-item.active{
+  background: #c596e3;
+  color: #fff;
+}
+
+.nav-item .nav-icon{ 
+  width:20px; 
+  height:20px; 
+  display:flex; 
+  align-items:center; 
+  justify-content:center; 
+  color:var(--muted); 
+}
+
+/* active item icon should be white to match text */
+.nav-item.active .nav-icon{
+  color: #fff;
+}
+
+/* ensure SVG icons inherit the color from their parent */
+.nav-item .nav-icon svg{
+  color: inherit;
+}
+
+.nav-item.active .nav-icon svg{
+  color: #fff;
+}
+
+/* label style */
+.nav-label{ font-size:12px; font-weight:600; color:inherit; }
+
+/* ensure responsive behavior remains */
+@media (max-width:900px){
+  .sidebar{ display:none; }
+}
+
+.content-area{flex:1;padding:24px;overflow:auto}
+
+/* Page top */
+.page-top{display:flex;justify-content:space-between;align-items:center;margin-bottom:18px}
+.page-title{margin:0;font-size:20px}
+.page-sub{color:var(--muted);font-size:13px;margin-top:4px}
+.primary-cta{background:var(--accent);color:#fff;padding:10px 14px;border-radius:18px;border:none;cursor:pointer;font-weight:600}
+
+/* Stock Orders card */
+.card{background:var(--panel);border-radius:12px;padding:18px;box-shadow:var(--card-shadow);margin-bottom:16px}
+.chips{display:flex;gap:10px;margin-bottom:12px}
+.chip{padding:8px 12px;border-radius:18px;background:#fff;border:1px solid #f1f5f9;color:var(--muted);font-weight:600}
+.orders-table{width:100%;border-collapse:collapse}
+.orders-table th, .orders-table td{padding:12px 10px;text-align:left;border-bottom:1px solid #f3f4f6;color:#111827}
+.orders-table th{font-weight:700;color:var(--muted);font-size:13px}
+
+/* Profile + Dashboard section */
+.profile-dashboard-grid{display:grid;grid-template-columns:300px 1fr;gap:18px;margin-top:12px;align-items:start}
+.user-list-column{min-width:220px}
+.user-and-dashboard{display:flex;flex-direction:column;gap:18px}
+
+/* User list */
+.user-list{background:var(--panel);padding:12px;border-radius:10px;box-shadow:var(--card-shadow)}
+.user-row{display:flex;align-items:center;gap:12px;padding:10px;border-radius:8px;cursor:pointer}
+.user-row:hover{background:#fafafa}
+.user-avatar{width:40px;height:40px;border-radius:8px;background:#ede9fe;color:var(--accent-600);display:flex;align-items:center;justify-content:center;font-weight:700}
+
+/* User profile */
+.profile-form{background:var(--panel);padding:16px;border-radius:10px;box-shadow:var(--card-shadow);display:flex;flex-direction:column;gap:10px}
+.form-row{display:flex;gap:10px}
+.form-row input, .form-row select{flex:1;padding:8px;border-radius:8px;border:1px solid #e6e9ee}
+.save-btn{align-self:flex-end;padding:8px 12px;background:var(--accent);color:#fff;border:none;border-radius:8px;cursor:pointer}
+
+/* Company dashboard */
+.dashboard{background:var(--panel);padding:16px;border-radius:10px;box-shadow:var(--card-shadow);display:flex;flex-direction:column;gap:10px}
+.ann-list{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:8px}
+.link-list a{color:var(--accent-600);text-decoration:none}
+
+/* Modal styles */
+/* modal backdrop: semi‑transparent overlay (theme aware) */
+:root {
+  /* light: subtle dark tint so page underneath is muted */
+  --modal-backdrop: rgba(2,6,23,0.12);
+}
+
+:root[data-theme="dark"],
+html.theme-dark {
+  /* dark: stronger tint on dark theme */
+  --modal-backdrop: rgba(2,6,23,0.6);
+}
+
+/* Modal: backdrop is semi-transparent, modal card body stays a solid color */
+.modal-backdrop {
+  position: fixed;
+  inset: 0;
+  background: var(--modal-backdrop); /* semi-transparent container body */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 2000;
+  pointer-events: auto;
+}
+
+/* Modal card (center panel) — keep a solid, non-transparent background */
+.modal-card {
+  position: relative;
+  z-index: 2001;
+  width: 100%;
+  max-width: 760px;
+  background: var(--card-bg); /* solid modal body color */
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 18px;
+  box-shadow: 0 20px 50px rgba(2,6,23,0.18);
+  color: var(--text);
+  overflow: auto;
+  background-clip: padding-box; /* ensure borders don't blend with semi-transparent backdrop */
+}
+
+/* Header and close button inside modal */
+.modal-header {
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:12px;
+  margin-bottom: 8px;
+}
+
+.modal-close {
+  background: transparent;
+  border: 0;
+  font-size: 18px;
+  line-height: 1;
+  cursor: pointer;
+  color: var(--muted);
+  padding: 6px;
+  border-radius: 6px;
+}
+.modal-close:hover { color: var(--text); background: rgba(0,0,0,0.03); }
+
+/* Form layout inside modal */
+.modal-form { display: grid; gap: 12px; }
+.modal-form .label { font-size: 13px; color: var(--muted); margin-bottom:6px; }
+
+/* Inputs / selects inside modal should match card background and text */
+.modal-form input,
+.modal-form select,
+.modal-form textarea {
+  width: 100%;
+  box-sizing: border-box;
+  padding: 10px 12px;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background: var(--card-bg);
+  color: var(--text);
+}
+
+/* Add dropdown arrow to select elements in modal */
+.modal-form select {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  padding-right: 36px;
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='12' height='12'><path d='M2 4l4 4 4-4' fill='none' stroke='%23666' stroke-width='1.6' stroke-linecap='round' stroke-linejoin='round'/></svg>");
+  background-repeat: no-repeat;
+  background-position: right 12px center;
+  background-size: 12px 12px;
+}
+
+/* Modal action buttons aligned to the right */
+.modal-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 8px;
+  margin-top: 16px;
+}
+
+/* Single row form layout */
+.single-row-form {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 16px;
+  align-items: end;
+  margin-bottom: 24px;
+  justify-content: center;
+  max-width: 100%;
+}
+
+/* Ensure modal actions don't get caught in grid */
+.modal-form {
+  display: flex;
+  flex-direction: column;
+}
+
+.single-row-form label {
+  display: flex;
+  flex-direction: column;
+}
+
+.single-row-form .label {
+  font-size: 13px;
+  color: var(--muted);
+  margin-bottom: 6px;
+}
+
+.single-row-form input,
+.single-row-form select {
+  padding: 10px 12px;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background: var(--card-bg);
+  color: var(--text);
+  font-size: 14px;
+}
+
+.single-row-form input[type="checkbox"] {
+  width: auto;
+  margin-top: 8px;
+}
+
+/* Global dropdown arrows for all select elements */
+select,
+.dropdown-select {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  padding-right: 32px;
+  background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' width='14' height='14' viewBox='0 0 24 24' fill='none'%3e%3cpath d='M7 10l5 5 5-5' stroke='%23374151' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/%3e%3c/svg%3e");
+  background-repeat: no-repeat;
+  background-position: right 10px center;
+  background-size: 14px 14px;
+}
+
+/* Modal form container for vertical layout */
+.modal-form-container {
+  display: flex;
+  flex-direction: column;
+}
+
+.modal-form-container .modal-form {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 10px 8px;
+  align-items: center;
+}
+
+.modal-form-container .modal-form label {
+  font-size: 12px;
+  color: #666;
+  line-height: 1.2;
+  display: block;
+  align-self: center;
+}
+
+.modal-form-container .modal-form input,
+.modal-form-container .modal-form select {
+  padding: 8px 10px;
+  border: 1px solid #d2d0ce;
+  border-radius: 4px;
+  font-size: 14px;
+  width: 100%;
+}
+
+.modal-form-container .modal-form select {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  padding-right: 32px;
+  background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' width='14' height='14' viewBox='0 0 24 24' fill='none'%3e%3cpath d='M7 10l5 5 5-5' stroke='%23374151' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/%3e%3c/svg%3e");
+  background-repeat: no-repeat;
+  background-position: right 10px center;
+  background-size: 14px 14px;
+  cursor: pointer;
+}
+
+.modal-form-container .modal-form input[type="checkbox"] {
+  width: auto;
+  margin-top: 4px;
+}
+
+/* Ensure modal actions are at the bottom */
+.modal-form .modal-actions,
+.modal-form-container .modal-actions {
+  margin-top: 32px;
+  padding-top: 20px;
+  border-top: 1px solid var(--border);
+  align-self: stretch;
+  order: 999;
+  display: flex;
+  justify-content: center;
+  gap: 12px;
+}
+
+/* Responsive behavior for single row form */
+@media (max-width: 768px) {
+  .single-row-form {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* Buttons */
+.btn-primary {
+  background: var(--accent);
+  color: #fff;
+  border: 0;
+  padding: 10px 14px;
+  border-radius: 10px;
+  cursor: pointer;
+}
+.btn-muted {
+  background: transparent;
+  border: 1px solid var(--border);
+  padding: 8px 12px;
+  border-radius: 10px;
+  cursor: pointer;
+  color: var(--muted);
+}
+
+/* Prevent modal being hidden by any stacking contexts in app */
+.app-shell, .header, .sidebar, .content-area, .card {
+  z-index: auto;
+}
+
+/* Reduce extra spacing when OrderDetails shows its own heading */
+.page-top {
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  gap:16px;
+  margin: 18px 0;
+}
+
+/* ensure OrderDetails header spacing looks consistent */
+.card + .card {
+  margin-top: 12px;
+}
+
+/* OrderDetails-specific tweaks */
+.orders-table th, .orders-table td {
+  padding: 10px 12px;
+  vertical-align: middle;
+}
+
+/* make the OrderDetails top controls align with page look */
+.card .label { margin-bottom: 6px; }
+
+/* === Form & card controls: make plain form (attachment 2) match the styled card look (attachment 1) === */
+
+/* Ensure all inputs/selects/textareas inside cards use the app style and full width */
+/* include .card input (not only attribute selectors) so inputs without a type attr are styled */
+.card input,
+.card input[type="text"],
+.card input[type="number"],
+.card input[type="date"],
+.card input[type="datetime-local"],
+.card input[type="time"],
+.card select,
+.card textarea {
+  width: 100%;
+  padding: 10px 12px;
+  border-radius: 8px;
+  border: 1px solid #e6e9ee;
+  background: #fff;
+  font-size: 14px;
+  color: #111827;
+  box-shadow: none;
+  outline: none;
+  transition: box-shadow 120ms ease, border-color 120ms ease;
+}
+
+/* focus state */
+.card input:focus,
+.card select:focus,
+.card textarea:focus {
+  border-color: rgba(109,40,217,0.9);
+  box-shadow: 0 4px 12px rgba(109,40,217,0.06);
+}
+
+/* labels inside cards */
+.card .label,
+.card label > .label {
+  display: block;
+  margin-bottom: 6px;
+  font-weight: 600;
+  color: var(--muted);
+  font-size: 13px;
+}
+
+/* grid form spacing — keep rows compact like attachment 1 */
+.card .form-grid {
+  display: grid;
+  gap: 12px;
+  grid-template-columns: repeat(3, 1fr);
+}
+.card .form-grid .full { grid-column: 1 / -1; }
+
+/* Order lines table controls align to match attachment 1 */
+.card .orders-table thead th {
+  background: transparent;
+  padding: 14px 12px;
+  color: var(--muted);
+  font-weight: 700;
+  font-size: 13px;
+}
+.card .orders-table tbody td {
+  padding: 12px;
+  vertical-align: middle;
+}
+
+/* Buttons in card header */
+.card > div[style*="display:flex"] .btn-primary,
+.card > div[style*="display:flex"] .btn-muted {
+  height: 36px;
+  padding: 8px 12px;
+}
+
+/* small helper to right align the Paste/Add controls exactly like the design */
+.card .controls-right { display:flex; gap:8px; align-items:center; }
+
+/* remove browser default select arrow padding inconsistencies */
+.card select { -webkit-appearance: none; -moz-appearance: none; appearance: none; background-image: none; }
+
+/* make the table's action button subtle and circular like attachment */
+.orders-table button.btn-muted {
+  min-width: 36px;
+  height: 36px;
+  padding: 0 10px;
+  border-radius: 8px;
+}
+
+/* keep consistent spacing between the header area and first card */
+.page-top { margin-bottom: 18px; }
+
+/* ensure the order header inside OrderDetails doesn't duplicate the global page-top spacing */
+.order-header { margin-bottom: 12px; }
+
+/* Make primary & muted buttons longer and prevent text wrapping */
+.btn-primary,
+.btn-muted {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  white-space: nowrap;     /* keep text on one line */
+  overflow: hidden;
+  text-overflow: ellipsis;
+  min-width: 140px;       /* make buttons longer so label fits */
+  padding: 8px 16px;
+  height: 36px;
+  border-radius: 8px;
+  flex: 0 0 auto;         /* do not shrink inside flex containers */
+}
+
+/* Slightly smaller buttons on narrow screens to avoid overflow */
+@media (max-width: 520px) {
+  .btn-primary,
+  .btn-muted {
+    min-width: 110px;
+    padding: 6px 10px;
+  }
+}
+
+/* Ensure the container holding the controls doesn't wrap the buttons */
+.card > div[style*="display:flex"],
+.card .controls-right,
+.card .card-controls {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  flex-wrap: nowrap;
+}
+
+/* Make the Export button visually subtle but matching size */
+.btn-muted {
+  background: #fff;
+  border: 1px solid #e6e9ee;
+  color: var(--muted);
+}
+
+/* Keep primary look consistent */
+.btn-primary {
+  background: var(--accent);
+  color: #fff;
+  border: none;
+}
+
+/* Logistics tiles (tabbed sections) */
+.log-tiles-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 12px;
+  align-items: start;
+}
+
+.log-tile {
+  display: flex;
+  border: 1px solid #e6e9ee;
+  border-radius: 8px;
+  overflow: hidden;
+  background: #fff;
+  cursor: pointer;
+  height: 48px;
+  min-width: 220px;
+  padding: 0;
+  box-shadow: var(--card-shadow);
+}
+
+.log-tile-left {
+  flex: 1 1 auto;
+  display: flex;
+  align-items: center;
+  padding: 0 14px;
+  color: #fff;
+  font-weight: 700;
+  font-size: 14px;
+  letter-spacing: -0.2px;
+}
+
+.log-tile-right {
+  width: 52px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* keep chip-style tabs consistent */
+.chip-active {
+  background: #eef2ff !important;
+  color: var(--accent-600) !important;
+  border-color: #e6e9ee !important;
+}
+
+/* ensure button text never wraps */
+.log-tile-left,
+.chip {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* responsive: reduce min-width on very small screens */
+@media (max-width: 520px) {
+  .log-tile { min-width: 160px; height:44px; }
+  .log-tile-left { padding: 0 10px; font-size:13px; }
+}
+
+/* Landing page layout */
+.landing {
+  display: flex;
+  gap: 20px;
+  align-items: stretch;
+  padding: 18px;
+}
+
+.landing-left {
+  flex: 0 1 520px;
+  min-width: 320px;
+}
+
+.landing-panel {
+  border-radius: 10px;
+  padding: 18px;
+  background: #fff;
+  border: 1px solid #eceff3;
+  box-shadow: var(--card-shadow);
+}
+
+.landing-row {
+  display: flex;
+  gap: 12px;
+  margin-bottom: 12px;
+}
+
+.landing-tile {
+  flex: 1 1 200px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: linear-gradient(180deg,#6bb24a,#4f9b36);
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  padding: 12px 14px;
+  font-weight: 700;
+  cursor: pointer;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  min-height: 48px;
+}
+
+.landing-tile:nth-child(2) { background: linear-gradient(180deg,#2f9cf0,#1d7fd6); }
+.landing-tile:nth-child(3) { background: linear-gradient(180deg,#f97316,#ef6b00); }
+
+.landing-tile-label { font-size: 15px; }
+.landing-tile-icon {
+  background: rgba(0,0,0,0.18);
+  width: 44px;
+  height: 44px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 6px;
+  margin-left: 10px;
+  font-size: 18px;
+}
+
+/* placeholders keep grid alignment */
+.landing-tile-placeholder { flex: 1 1 200px; height: 48px; }
+
+/* right area logo */
+.landing-right {
+  flex: 1 1 auto;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  min-height: 420px;
+}
+
+.landing-logo {
+  max-width: 520px;
+  width: 100%;
+  height: auto;
+  object-fit: contain;
+  display:block;
+}
+
+/* responsive */
+@media (max-width: 980px) {
+  .landing { flex-direction: column; }
+  .landing-left { width: 100%; }
+  .landing-right { width: 100%; padding-top: 8px; }
+}
+
+/* Stock View Styles */
+.stock-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 16px;
+  gap: 16px;
+}
+
+.stock-filters {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  flex: 1;
+}
+
+.stock-search {
+  flex: 1.5;
+  min-width: 210px;
+  max-width: 300px;
+  padding: 10px 12px;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background: var(--card-bg);
+  color: var(--text);
+  font-size: 14px;
+}
+
+.stock-type-filter {
+  flex: 0.35;
+  min-width: 70px;
+  padding: 10px 32px 10px 12px;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background-color: var(--card-bg);
+  color: var(--text);
+  font-size: 14px;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' width='14' height='14' viewBox='0 0 24 24' fill='none'%3e%3cpath d='M7 10l5 5 5-5' stroke='%23374151' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/%3e%3c/svg%3e");
+  background-repeat: no-repeat;
+  background-position: right 8px center;
+  background-size: 14px 14px;
+}
+
+.stock-actions {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+
+.stock-export-btn {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.stock-search:focus,
+.stock-type-filter:focus {
+  outline: none;
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px rgba(107, 33, 168, 0.1);
+}
+
+/* Stock table specific styling */
+.installations-table {
+  padding-right: 16px;
+}
+
+.name-cell,
+.details-cell,
+.price-cell,
+.quantity-cell,
+.serial-cell,
+.sku-cell,
+.type-cell,
+.actions-cell {
+  padding: 12px 16px;
+  vertical-align: top;
+  font-size: 14px;
+  color: #323130;
+}
+
+.name-cell {
+  max-width: 250px;
+  word-wrap: break-word;
+}
+
+.tool-info {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.tool-name {
+  font-weight: 600;
+  color: #323130;
+}
+
+.tool-details {
+  font-size: 12px;
+  color: #666;
+}
+
+.serial-badge.has-serial {
+  background: #e8f5e8;
+  color: #2d7d32;
+}
+
+.serial-badge.no-serial {
+  background: #fff3e0;
+  color: #f57c00;
+}
+
+.serial-badge {
+  display: inline-block;
+  padding: 4px 8px;
+  border-radius: 12px;
+  font-size: 12px;
+  font-weight: 500;
+}
+
+.edit-btn {
+  background: transparent;
+  border: 1px solid #d2d0ce;
+  border-radius: 4px;
+  padding: 6px;
+  cursor: pointer;
+  color: #666;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.edit-btn:hover {
+  background: #f8f9fa;
+  color: #0078d4;
+  border-color: #0078d4;
+}
+
+@media (max-width: 768px) {
+  .stock-header {
+    flex-direction: column;
+    align-items: stretch;
+  }
+  
+  .stock-filters {
+    flex-direction: column;
+    align-items: stretch;
+  }
+  
+  .stock-search,
+  .stock-type-filter {
+    min-width: auto;
+    flex: none;
+  }
+}
