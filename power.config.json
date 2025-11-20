@@ -8,24 +8,56 @@
   "logoPath": "Default",
   "localAppUrl": "http://localhost:3000/",
   "connectionReferences": {
-    "shared_commondataserviceforapps": {
-      "connectionReferenceLogicalName": "dataverse_connection",
-      "source": "Dataverse",
-      "id": "b861225d5bd845dd8b07c966cf4f1c47",
-      "connectionId": "b861225d5bd845dd8b07c966cf4f1c47"
+    "b3edf516ec61454fb4f1df811580c920": {
+      "id": "/providers/Microsoft.PowerApps/apis/shared_sharepointonline",
+      "displayName": "SharePoint",
+      "dataSources": [
+        "sharepointonline"
+      ],
+      "dataSets": {}
     },
-    "shared_office365users": {
-      "connectionReferenceLogicalName": "office365users_connection",
-      "source": "Office365Users",
-      "id": "b861225d5bd845dd8b07c966cf4f1c47",
-      "connectionId": "b861225d5bd845dd8b07c966cf4f1c47"
+    "4361a4de3ed842908c159e1023fe34b9": {
+      "id": "/providers/Microsoft.PowerApps/apis/shared_office365users",
+      "displayName": "Office 365 Users",
+      "dataSources": [
+        "office365users"
+      ],
+      "dataSets": {}
+    },
+    "default": {
+      "id": "/providers/Microsoft.PowerApps/apis/shared_commondataserviceforapps",
+      "displayName": "Microsoft Dataverse",
+      "dataSources": [
+        "commondataserviceforapps"
+      ],
+      "dataSets": {
+        "neo_wonlookup_master": {
+          "displayName": "NEO Won Lookup Master",
+          "logicalName": "neo_wonlookup_master"
+        },
+        "cr8ac_codeappstable": {
+          "displayName": "Code Apps Table",
+          "logicalName": "cr8ac_codeappstable"
+        }
+      }
+    },
+    "b861225d5bd845dd8b07c966cf4f1c47": {
+      "id": "/providers/Microsoft.PowerApps/apis/shared_commondataserviceforapps",
+      "displayName": "Microsoft Dataverse - NEO Tables",
+      "dataSources": [
+        "commondataserviceforapps"
+      ],
+      "dataSets": {
+        "neo_wonlookup_master": {
+          "displayName": "NEO Won Lookup Master",
+          "logicalName": "neo_wonlookup_master"
+        },
+        "cr8ac_codeappstable": {
+          "displayName": "Code Apps Table",
+          "logicalName": "cr8ac_codeappstable"
+        }
+      }
     }
   },
-  "databaseReferences": {
-    "default.cds": {
-      "databaseType": "Dataverse",
-      "connectionReferenceLogicalName": "dataverse_connection",
-      "tables": ["systemuser", "cr8ac_codeappstable"]
-    }
-  }
+  "databaseReferences": {}
 }

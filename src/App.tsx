@@ -10,6 +10,13 @@ import Landing from './components/Landing';
 import UserList from './components/UserList';
 import Coordination from './components/Coordination';
 import Profile from './components/Profile';
+import SharePointDocumentsView from './components/SharePointDocumentsView';
+import DataverseTableView from './components/DataverseTableView';
+import EnvTableDataverseView from './components/EnvTableDataverseView';
+import DataverseExample from './components/DataverseExample';
+import DataverseExplorer from './components/DataverseExplorer';
+import NeoWonlookupMasterView from './components/NeoWonlookupMasterView';
+import Cr8acCodeappstableView from './components/Cr8acCodeappstableView';
 import PowerAppsGuard from './components/PowerAppsGuard';
 import { usePowerAppsInit } from './hooks/usePowerAppsInit';
 import { initialStockOrders } from './data/dummyData';
@@ -24,7 +31,7 @@ const App: React.FC = () => {
   const [showCreateModal, setShowCreateModal] = useState(false);
 
   // view state: include 'home'
-  const [view, setView] = useState<'home' | 'orders' | 'stock' | 'order' | 'logistics' | 'users' | 'coordination' | 'profile'>('home');
+  const [view, setView] = useState<'home' | 'orders' | 'stock' | 'order' | 'logistics' | 'users' | 'coordination' | 'profile' | 'sharepoint' | 'office365' | 'dataverse' | 'envtable' | 'explorer' | 'lookup' | 'codeapps'>('home');
   const [activeOrder, setActiveOrder] = useState<typeof initialStockOrders[number] | null>(null);
 
   // new: which logistics tile is selected (controls the main content area when view === 'logistics')
@@ -115,6 +122,13 @@ const App: React.FC = () => {
         else if (v === 'users') setView('users');
         else if (v === 'coordination') setView('coordination');
         else if (v === 'profile') setView('profile');
+        else if (v === 'sharepoint') setView('sharepoint');
+        else if (v === 'office365') setView('office365');
+        else if (v === 'dataverse') setView('dataverse');
+        else if (v === 'envtable') setView('envtable');
+        else if (v === 'explorer') setView('explorer');
+        else if (v === 'lookup') setView('lookup');
+        else if (v === 'codeapps') setView('codeapps');
       }} />
       <div className="app-body">
         <Sidebar onNavigate={(v: string) => {
@@ -124,16 +138,23 @@ const App: React.FC = () => {
           else if (v === 'orders') setView('orders');
           else if (v === 'users') setView('users');
           else if (v === 'coordination') setView('coordination');
+          else if (v === 'sharepoint') setView('sharepoint');
+          else if (v === 'office365') setView('office365');
+          else if (v === 'dataverse') setView('dataverse');
+          else if (v === 'envtable') setView('envtable');
+          else if (v === 'explorer') setView('explorer');
+          else if (v === 'lookup') setView('lookup');
+          else if (v === 'codeapps') setView('codeapps');
         }} />
         <main className="content-area">
           {view !== 'order' && view !== 'coordination' && (
             <section className="page-top">
               <div>
                 <h1 className="page-title">
-                  {view === 'home' ? 'Welcome' : view === 'orders' ? 'Stock Orders' : view === 'stock' ? 'Stock Inventory' : view === 'logistics' ? 'Logistics' : view === 'profile' ? 'Profile' : ''}
+                  {view === 'home' ? 'Welcome' : view === 'orders' ? 'Stock Orders' : view === 'stock' ? 'Stock Inventory' : view === 'logistics' ? 'Logistics' : view === 'profile' ? 'Profile' : view === 'sharepoint' ? 'SharePoint' : view === 'office365' ? 'Table Records' : view === 'dataverse' ? 'Dataverse' : view === 'envtable' ? 'Environment Table' : view === 'lookup' ? 'Lookup Manager' : view === 'codeapps' ? 'Code Apps Table' : ''}
                 </h1>
                 <div className="page-sub">
-                  {view === 'home' ? 'Quick access' : view === 'orders' ? 'View, create, and manage stock requests' : view === 'stock' ? 'Browse tool stock and types' : view === 'logistics' ? 'Manage stock, tools and assets' : view === 'profile' ? 'Manage your account settings' : ''}
+                  {view === 'home' ? 'Quick access' : view === 'orders' ? 'View, create, and manage stock requests' : view === 'stock' ? 'Browse tool stock and types' : view === 'logistics' ? 'Manage stock, tools and assets' : view === 'profile' ? 'Manage your account settings' : view === 'sharepoint' ? 'View all SharePoint sites and navigate' : view === 'office365' ? 'Code Apps Table data from Dataverse' : view === 'dataverse' ? 'Microsoft Dataverse integration' : view === 'envtable' ? 'Environment table records from Dataverse' : view === 'lookup' ? 'Manage lookup data from NEO Won Lookup Master table' : view === 'codeapps' ? 'View and manage Code Apps Table records from Dataverse' : ''}
                 </div>
               </div>
 
@@ -147,6 +168,12 @@ const App: React.FC = () => {
           {view === 'home' && (
             <Landing
               onOpen={(id) => {
+                // Handle lookup-manager specifically
+                if (id === 'lookup-manager') {
+                  setView('lookup');
+                  return;
+                }
+                
                 // open Logistics view and preselect a sensible tile based on the landing tile id
                 setView('logistics');
 
@@ -191,6 +218,13 @@ const App: React.FC = () => {
           )}
           {view === 'coordination' && <Coordination />}
           {view === 'profile' && <Profile />}
+          {view === 'sharepoint' && <SharePointDocumentsView />}
+          {view === 'office365' && <DataverseTableView />}
+          {view === 'dataverse' && <DataverseExample />}
+          {view === 'envtable' && <EnvTableDataverseView />}
+          {view === 'explorer' && <DataverseExplorer />}
+          {view === 'lookup' && <NeoWonlookupMasterView />}
+          {view === 'codeapps' && <Cr8acCodeappstableView />}
 
         </main>
       </div>

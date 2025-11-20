@@ -35,31 +35,56 @@ const IconBox: React.FC = () => (
 const TileButton: React.FC<{ t: Tile; color: string; onClick: (id: string) => void }> = ({ t, color, onClick }) => (
   <button
     type="button"
-    className="landing-tile"
+    className="landing-tile-modern"
     onClick={() => onClick(t.id)}
     aria-label={t.label}
     title={t.label}
     style={{
       display: 'flex',
-      height: 48,
-      borderRadius: 8,
+      height: 56,
+      borderRadius: 12,
       overflow: 'hidden',
       border: '1px solid #e6e9ee',
       background: '#fff',
       alignItems: 'stretch',
       padding: 0,
+      boxShadow: '0 2px 8px rgba(0,0,0,0.08)',
+      transition: 'all 0.2s ease',
+      cursor: 'pointer',
+    }}
+    onMouseEnter={(e) => {
+      e.currentTarget.style.transform = 'translateY(-2px)';
+      e.currentTarget.style.boxShadow = '0 4px 16px rgba(0,0,0,0.12)';
+    }}
+    onMouseLeave={(e) => {
+      e.currentTarget.style.transform = 'translateY(0)';
+      e.currentTarget.style.boxShadow = '0 2px 8px rgba(0,0,0,0.08)';
     }}
   >
-    {/* thin coloured stripe (keeps the colour but removes full-text background) */}
-    <div style={{ width: 12, background: color }} />
+    {/* thin coloured stripe */}
+    <div style={{ width: 6, background: color }} />
 
-    {/* label area - white background, text tinted with the colour for emphasis */}
-    <div style={{ flex: 1, display: 'flex', alignItems: 'center', padding: '0 12px', color: color, fontWeight: 700 }}>
+    {/* label area */}
+    <div style={{ 
+      flex: 1, 
+      display: 'flex', 
+      alignItems: 'center', 
+      padding: '0 16px', 
+      color: '#1f2937', 
+      fontWeight: 600,
+      fontSize: '15px'
+    }}>
       {t.label}
     </div>
 
-    {/* dark icon box on the right */}
-    <div style={{ width: 52, background: '#082341', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+    {/* icon box */}
+    <div style={{ 
+      width: 56, 
+      background: color,
+      display: 'flex', 
+      alignItems: 'center', 
+      justifyContent: 'center' 
+    }}>
       <IconBox />
     </div>
   </button>

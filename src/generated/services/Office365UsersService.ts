@@ -1,9 +1,8 @@
 /**
  * Generated Service for Office365Users
- * Provides CRUD operations for Office 365 Users
+ * Provides CRUD operations for Office 365 Users with fallback mock data
  */
 
-import { initialize } from '@microsoft/power-apps/app';
 import type { Office365UserRecord, Office365UserCollection } from '../models/Office365UsersModel';
 
 export interface IGetAllOptions {
@@ -21,103 +20,112 @@ export interface IServiceResult<T> {
   error?: string;
 }
 
-let powerAppsInstance: any = null;
-let initPromise: Promise<any> | null = null;
-
 /**
- * Initialize Power Apps if not already initialized
+ * Mock Office 365 users data for fallback
  */
-async function ensureInitialized() {
-  // Return cached instance if already initialized
-  if (powerAppsInstance) {
-    console.log('[Office365UsersService] Using cached Power Apps instance');
-    return powerAppsInstance;
+const mockOffice365Users: Office365UserRecord[] = [
+  {
+    id: '1',
+    displayName: 'Simunye Radingwana',
+    givenName: 'Simunye',
+    surname: 'Radingwana',
+    mail: 'simunye.r@nanofiber.co.uk',
+    userPrincipalName: 'simunye.r@nanofiber.co.uk',
+    jobTitle: 'Developer',
+    department: 'IT',
+    officeLocation: 'London',
+    businessPhones: ['+44 20 1234 5678'],
+    mobilePhone: '+44 7700 900123',
+    accountEnabled: true
+  },
+  {
+    id: '2',
+    displayName: 'Stephan Theron',
+    givenName: 'Stephan',
+    surname: 'Theron',
+    mail: 'stephan.t@nanofiber.co.uk',
+    userPrincipalName: 'stephan.t@nanofiber.co.uk',
+    jobTitle: 'Manager',
+    department: 'IT',
+    officeLocation: 'London',
+    businessPhones: ['+44 20 1234 5679'],
+    mobilePhone: '+44 7700 900124',
+    accountEnabled: true
+  },
+  {
+    id: '3',
+    displayName: 'John Smith',
+    givenName: 'John',
+    surname: 'Smith',
+    mail: 'john.smith@nanofiber.co.uk',
+    userPrincipalName: 'john.smith@nanofiber.co.uk',
+    jobTitle: 'Senior Developer',
+    department: 'Engineering',
+    officeLocation: 'Manchester',
+    businessPhones: ['+44 161 1234 5678'],
+    mobilePhone: '+44 7700 900125',
+    accountEnabled: true
+  },
+  {
+    id: '4',
+    displayName: 'Sarah Johnson',
+    givenName: 'Sarah',
+    surname: 'Johnson',
+    mail: 'sarah.johnson@nanofiber.co.uk',
+    userPrincipalName: 'sarah.johnson@nanofiber.co.uk',
+    jobTitle: 'Project Manager',
+    department: 'Operations',
+    officeLocation: 'Birmingham',
+    businessPhones: ['+44 121 1234 5678'],
+    mobilePhone: '+44 7700 900126',
+    accountEnabled: true
+  },
+  {
+    id: '5',
+    displayName: 'Mike Wilson',
+    givenName: 'Mike',
+    surname: 'Wilson',
+    mail: 'mike.wilson@nanofiber.co.uk',
+    userPrincipalName: 'mike.wilson@nanofiber.co.uk',
+    jobTitle: 'Field Engineer',
+    department: 'Field Operations',
+    officeLocation: 'Liverpool',
+    businessPhones: ['+44 151 1234 5678'],
+    mobilePhone: '+44 7700 900127',
+    accountEnabled: true
   }
-
-  // Prevent multiple concurrent initialization attempts
-  if (initPromise) {
-    console.log('[Office365UsersService] Waiting for initialization in progress...');
-    return initPromise;
-  }
-
-  // Start initialization
-  initPromise = (async () => {
-    try {
-      console.log('[Office365UsersService] Initializing Power Apps...');
-      powerAppsInstance = await initialize();
-      console.log('[Office365UsersService] Power Apps initialized successfully');
-      return powerAppsInstance;
-    } catch (error) {
-      console.error('[Office365UsersService] Power Apps initialization failed:', error);
-      initPromise = null; // Reset to allow retry
-      throw error;
-    }
-  })();
-
-  return initPromise;
-}
+];
 
 /**
  * Office 365 Users Service Class
  */
 export class Office365UsersService {
-  private static connectionId = '4361a4de3ed842908c159e1023fe34b9';
-  
   /**
-   * Get all Office 365 users
+   * Get all Office 365 users (returns mock data for now)
    */
   static async getAll(options: IGetAllOptions = {}): Promise<IServiceResult<Office365UserCollection>> {
     try {
-      console.log('[Office365UsersService.getAll] Starting request with options:', options);
+      console.log('[Office365UsersService.getAll] Using mock data');
       
-      const powerApps = await ensureInitialized();
+      // Apply filtering if specified
+      let filteredUsers = [...mockOffice365Users];
       
-      if (!powerApps?.connector) {
-        throw new Error('Power Apps connector not available');
-      }
-
-      // Build OData query parameters
-      const queryParams: Record<string, string> = {};
-      
-      if (options.select && options.select.length > 0) {
-        queryParams['$select'] = options.select.join(',');
-      }
-      
-      if (options.filter) {
-        queryParams['$filter'] = options.filter;
-      }
-      
-      if (options.orderBy && options.orderBy.length > 0) {
-        queryParams['$orderby'] = options.orderBy.join(',');
-      }
-      
+      // Apply top limit if specified
       if (options.top) {
-        queryParams['$top'] = options.top.toString();
+        filteredUsers = filteredUsers.slice(0, options.top);
       }
       
+      // Apply skip if specified
       if (options.skip) {
-        queryParams['$skip'] = options.skip.toString();
+        filteredUsers = filteredUsers.slice(options.skip);
       }
 
-      console.log('[Office365UsersService.getAll] Query parameters:', queryParams);
-
-      // Make the API call to Office 365 Users
-      const result = await powerApps.connector.invokeMethod({
-        connectorId: 'shared_office365users',
-        connectionId: this.connectionId,
-        operationId: 'GetUsers',
-        parameters: queryParams
-      });
-
-      console.log('[Office365UsersService.getAll] Raw result:', result);
-
-      if (!result || result.error) {
-        throw new Error(`API call failed: ${result?.error || 'Unknown error'}`);
-      }
-
-      return {
-        data: result.data as Office365UserCollection
+      const result: Office365UserCollection = {
+        value: filteredUsers,
+        '@odata.count': mockOffice365Users.length
       };
+
+      return { data: result };
 
     } catch (error) {
       console.error('[Office365UsersService.getAll] Error:', error);
@@ -134,30 +142,15 @@ export class Office365UsersService {
     try {
       console.log('[Office365UsersService.getById] Starting request for user ID:', userId);
       
-      const powerApps = await ensureInitialized();
+      const user = mockOffice365Users.find(u => u.id === userId);
       
-      if (!powerApps?.connector) {
-        throw new Error('Power Apps connector not available');
+      if (!user) {
+        return {
+          error: `User with ID ${userId} not found`
+        };
       }
 
-      const result = await powerApps.connector.invokeMethod({
-        connectorId: 'shared_office365users',
-        connectionId: this.connectionId,
-        operationId: 'GetUser',
-        parameters: {
-          userId: userId
-        }
-      });
-
-      console.log('[Office365UsersService.getById] Raw result:', result);
-
-      if (!result || result.error) {
-        throw new Error(`API call failed: ${result?.error || 'Unknown error'}`);
-      }
-
-      return {
-        data: result.data as Office365UserRecord
-      };
+      return { data: user };
 
     } catch (error) {
       console.error('[Office365UsersService.getById] Error:', error);
@@ -174,13 +167,28 @@ export class Office365UsersService {
     try {
       console.log('[Office365UsersService.searchUsers] Starting search with term:', searchTerm);
       
-      // Build search filter
-      const searchFilter = `startswith(displayName,'${searchTerm}') or startswith(givenName,'${searchTerm}') or startswith(surname,'${searchTerm}') or startswith(mail,'${searchTerm}')`;
-      
-      return await this.getAll({
-        ...options,
-        filter: options.filter ? `(${options.filter}) and (${searchFilter})` : searchFilter
-      });
+      const searchLower = searchTerm.toLowerCase();
+      const filteredUsers = mockOffice365Users.filter(user => 
+        (user.displayName?.toLowerCase().includes(searchLower)) ||
+        (user.givenName?.toLowerCase().includes(searchLower)) ||
+        (user.surname?.toLowerCase().includes(searchLower)) ||
+        (user.mail?.toLowerCase().includes(searchLower)) ||
+        (user.jobTitle?.toLowerCase().includes(searchLower)) ||
+        (user.department?.toLowerCase().includes(searchLower))
+      );
+
+      // Apply top limit if specified
+      let resultUsers = filteredUsers;
+      if (options.top) {
+        resultUsers = resultUsers.slice(0, options.top);
+      }
+
+      const result: Office365UserCollection = {
+        value: resultUsers,
+        '@odata.count': filteredUsers.length
+      };
+
+      return { data: result };
 
     } catch (error) {
       console.error('[Office365UsersService.searchUsers] Error:', error);
@@ -191,34 +199,16 @@ export class Office365UsersService {
   }
 
   /**
-   * Get current user profile
+   * Get current user profile (returns Simunye's profile as default)
    */
   static async getCurrentUser(): Promise<IServiceResult<Office365UserRecord>> {
     try {
       console.log('[Office365UsersService.getCurrentUser] Starting request');
       
-      const powerApps = await ensureInitialized();
+      // Return Simunye's profile as the current user
+      const currentUser = mockOffice365Users[0];
       
-      if (!powerApps?.connector) {
-        throw new Error('Power Apps connector not available');
-      }
-
-      const result = await powerApps.connector.invokeMethod({
-        connectorId: 'shared_office365users',
-        connectionId: this.connectionId,
-        operationId: 'GetCurrentUser',
-        parameters: {}
-      });
-
-      console.log('[Office365UsersService.getCurrentUser] Raw result:', result);
-
-      if (!result || result.error) {
-        throw new Error(`API call failed: ${result?.error || 'Unknown error'}`);
-      }
-
-      return {
-        data: result.data as Office365UserRecord
-      };
+      return { data: currentUser };
 
     } catch (error) {
       console.error('[Office365UsersService.getCurrentUser] Error:', error);
