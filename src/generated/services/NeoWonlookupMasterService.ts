@@ -131,20 +131,22 @@ export async function getAllNeoWonlookupMaster(options?: IGetAllOptions): Promis
     const query = buildODataQuery(options);
     console.log('[NeoWonlookupMasterService] OData Query:', query);
     
-    // Call retrieveMultipleRecordsAsync with table name and query
-    const response = await client.retrieveMultipleRecordsAsync(
-      'neo_wonlookup_master', // Entity logical name
-      query ? `?${query}` : '' // OData query string with ? prefix
-    );
-    
-    console.log('[NeoWonlookupMasterService] Full API response:', response);
-    console.log('[NeoWonlookupMasterService] Retrieved records:', response?.entities?.length || 0);
-    
-    return {
-      data: response?.entities || []
-    };
-    
-  } catch (error) {
+      // Build the full WebAPI URL for Dataverse
+      const queryString = query ? `?${query}` : '';
+      
+      console.log('[NeoWonlookupMasterService] Using retrieveMultipleRecordsAsync with table: neo_wonlookup_master');
+      
+      const response = await client.retrieveMultipleRecordsAsync(
+        'neo_wonlookup_master',
+        queryString
+      );
+      
+      console.log('[NeoWonlookupMasterService] Full API response:', response);
+      console.log('[NeoWonlookupMasterService] Retrieved records:', response?.entities?.length || 0);
+      
+      return {
+        data: response?.entities || []
+      };  } catch (error) {
     console.error('[NeoWonlookupMasterService] Error getting all records:', error);
     return {
       error: error instanceof Error ? error.message : 'Unknown error occurred'

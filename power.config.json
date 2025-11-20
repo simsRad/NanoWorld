@@ -28,35 +28,21 @@
       "id": "/providers/Microsoft.PowerApps/apis/shared_commondataserviceforapps",
       "displayName": "Microsoft Dataverse",
       "dataSources": [
-        "commondataserviceforapps"
+        "commondataserviceforapps",
+        "neo_wonlookup_master",
+        "cr8ac_codeappstable"
       ],
-      "dataSets": {
-        "neo_wonlookup_master": {
-          "displayName": "NEO Won Lookup Master",
-          "logicalName": "neo_wonlookup_master"
-        },
-        "cr8ac_codeappstable": {
-          "displayName": "Code Apps Table",
-          "logicalName": "cr8ac_codeappstable"
-        }
-      }
+      "dataSets": {}
     },
     "b861225d5bd845dd8b07c966cf4f1c47": {
       "id": "/providers/Microsoft.PowerApps/apis/shared_commondataserviceforapps",
       "displayName": "Microsoft Dataverse - NEO Tables",
       "dataSources": [
-        "commondataserviceforapps"
+        "commondataserviceforapps",
+        "neo_wonlookup_master",
+        "cr8ac_codeappstable"
       ],
-      "dataSets": {
-        "neo_wonlookup_master": {
-          "displayName": "NEO Won Lookup Master",
-          "logicalName": "neo_wonlookup_master"
-        },
-        "cr8ac_codeappstable": {
-          "displayName": "Code Apps Table",
-          "logicalName": "cr8ac_codeappstable"
-        }
-      }
+      "dataSets": {}
     }
   },
   "databaseReferences": {}

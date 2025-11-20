@@ -183,9 +183,14 @@ export class Cr8acCodeappstableService {
       const query = buildODataQuery(options);
       console.log('[Cr8acCodeappstableService] OData Query:', query);
       
+      // Build the full WebAPI URL for Dataverse
+      const queryString = query ? `?${query}` : '';
+      
+      console.log('[Cr8acCodeappstableService] Using retrieveMultipleRecordsAsync with table: cr8ac_codeappstable');
+      
       const response = await client.retrieveMultipleRecordsAsync(
         'cr8ac_codeappstable',
-        query ? `?${query}` : ''
+        queryString
       );
       
       console.log('[Cr8acCodeappstableService] Full API response:', response);
